@@ -1,25 +1,26 @@
 #!/bin/bash
 # Simple script to list version numbers of critical development tools
+. script-helper.sh
 
 
-column_print() {
+column_print() (
     printf "%-25s %-25s\n" "$1" "$2"
-}
+)
 
 
-run_check() {
+run_check() (
     column_print "P: $1" "O: $2"
-}
+)
 
 
 # General info
-echo "GENERAL"
+title "GENERAL"
 cat /proc/version
 echo
 
 
 # Symlink info
-echo "SYMLINKS"
+title "SYMLINKS"
 
 MYSH=$(readlink -f /bin/sh)
 echo "/bin/sh -> ${MYSH}"
@@ -46,7 +47,7 @@ echo
 
 
 # Compiler functionality info
-echo "COMPILER CHECK"
+title "COMPILER CHECK"
 
 echo 'int main(){}' > dummy.c && g++ -o dummy dummy.c
 
@@ -60,6 +61,7 @@ echo
 
 
 # Software check info
+title "SOFTWARE CHECK"
 column_print "PROGRAM" "OUTPUT"
 run_check "bash" "$(bash --version | head -n1 | cut -d" " -f2-4)"
 run_check "binutils" "$(ld --version | head -n1 | cut -d" " -f3-)"
