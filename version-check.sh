@@ -22,8 +22,8 @@ echo
 echo "SYMLINKS"
 
 MYSH=$(readlink -f /bin/sh)
-echo "/bin/sh -> $MYSH"
-echo "$MYSH" | grep -q bash || echo "ERROR: /bin/sh does not point to bash"
+echo "/bin/sh -> ${MYSH}"
+echo "${MYSH}" | grep -q bash || echo "ERROR: /bin/sh does not point to bash"
 unset MYSH
 
 if [ -h /usr/bin/yacc ]; then
