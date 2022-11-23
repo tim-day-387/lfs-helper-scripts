@@ -1,27 +1,30 @@
 #!/bin/bash
-
 # Simple script to list version numbers of critical development tools
-export LC_ALL=C
 
-# General version info
+
+column_print() {
+    printf "%-25s %-25s\n" "$1" "$2"
+}
+
+
+run_check() {
+    column_print "P: $1" "O: $2"
+}
+
+
+# General info
+echo "GENERAL"
 cat /proc/version
 echo
 
-# Check bash
-bash --version | head -n1 | cut -d" " -f2-4
+
+# Symlink info
+echo "SYMLINKS"
+
 MYSH=$(readlink -f /bin/sh)
 echo "/bin/sh -> $MYSH"
 echo $MYSH | grep -q bash || echo "ERROR: /bin/sh does not point to bash"
 unset MYSH
-echo
-
-# Check binutils, coreutils
-echo -n "Binutils: "; ld --version | head -n1 | cut -d" " -f3-
-echo -n "Coreutils: "; chown --version | head -n1 | cut -d")" -f2
-echo
-
-# Check bison, yacc
-bison --version | head -n1
 
 if [ -h /usr/bin/yacc ]; then
   echo "/usr/bin/yacc -> `readlink -f /usr/bin/yacc`";
@@ -30,19 +33,6 @@ elif [ -x /usr/bin/yacc ]; then
 else
   echo "yacc not found"
 fi
-echo
-
-# Check bzip2
-bzip2 --version 2>&1 < /dev/null | head -n1 | cut -d" " -f1,6-
-echo
-
-# Check diff, find
-diff --version | head -n1
-find --version | head -n1
-echo
-
-# Check awk/gawk
-gawk --version | head -n1
 
 if [ -h /usr/bin/awk ]; then
   echo "/usr/bin/awk -> `readlink -f /usr/bin/awk`";
@@ -51,35 +41,12 @@ elif [ -x /usr/bin/awk ]; then
 else
   echo "awk not found"
 fi
+
 echo
 
-# Check glibc
-ldd --version | head -n1 | cut -d" " -f2-
-echo
 
-# Check grep, gzip, m4, make, patch
-grep --version | head -n1
-gzip --version | head -n1
-m4 --version | head -n1
-make --version | head -n1
-patch --version | head -n1
-echo
-
-# Check perl, python3
-echo Perl `perl -V:version`
-python3 --version
-echo
-
-# Check sed, tar, texinfo, xz
-sed --version | head -n1
-tar --version | head -n1
-makeinfo --version | head -n1
-xz --version | head -n1
-echo
-
-# Check gcc, g++, and compilation
-gcc --version | head -n1
-g++ --version | head -n1
+# Compiler functionality info
+echo "COMPILER CHECK"
 
 echo 'int main(){}' > dummy.c && g++ -o dummy dummy.c
 
@@ -89,3 +56,30 @@ if [ -x dummy ]
 fi
 
 rm -f dummy.c dummy
+echo
+
+
+# Software check info
+column_print "PROGRAM" "OUTPUT"
+run_check "bash" "$(bash --version | head -n1 | cut -d" " -f2-4)"
+run_check "binutils" "$(ld --version | head -n1 | cut -d" " -f3-)"
+run_check "coreutils" "$(chown --version | head -n1 | cut -d")" -f2)"
+run_check "bison" "$(bison --version | head -n1)"
+run_check "bzip2" "$(bzip2 --version 2>&1 < /dev/null | head -n1 | cut -d" " -f1,6-)"
+run_check "diff" "$(diff --version | head -n1)"
+run_check "find" "$(find --version | head -n1)"
+run_check "gawk" "$(gawk --version | head -n1)"
+run_check "glibc" "$(ldd --version | head -n1 | cut -d" " -f2-)"
+run_check "grep" "$(grep --version | head -n1)"
+run_check "gzip" "$(gzip --version | head -n1)"
+run_check "m4" "$(m4 --version | head -n1)"
+run_check "make" "$(make --version | head -n1)"
+run_check "patch" "$(patch --version | head -n1)"
+run_check "python3" "$(python3 --version)"
+run_check "sed" "$(sed --version | head -n1)"
+run_check "tar" "$(tar --version | head -n1)"
+run_check "makeinfo" "$(makeinfo --version | head -n1)"
+run_check "xz" "$(xz --version | head -n1)"
+run_check "gcc" "$(gcc --version | head -n1)"
+run_check "g++" "$(g++ --version | head -n1)"
+run_check "perl" "$(perl -V:version)"
