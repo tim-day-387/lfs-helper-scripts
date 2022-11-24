@@ -16,6 +16,6 @@ echo
 
 
 title "MOUNT"
-echo "Mount point:" $LFS
-mkdir -pv $LFS
-sudo mount -v -t ext4 $disk $LFS
+echo "Mount point:" "${LFS}"
+mkdir -pv "${LFS}"
+sudo mount -v -t ext4 "${disk}" "${LFS}"

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Wrapper to fdisk
-. script-helper.sh
+source script-helper.sh
 
 
 title "DISK LAYOUT"
