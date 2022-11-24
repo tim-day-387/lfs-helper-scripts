@@ -9,5 +9,5 @@ check_lfs_mount
 check_cmd_for_failure
 
 
-sudo umount $LFS
+sudo umount "${LFS}"
 unset LFS
