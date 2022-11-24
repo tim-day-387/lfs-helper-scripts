@@ -1,6 +1,6 @@
 #!/bin/bash
 # Enable swapping for given file
-source script-helper.sh
+source "${S_LIB_PATH}"/script-helper.sh
 
 
 get_disk

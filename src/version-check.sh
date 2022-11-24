@@ -1,6 +1,6 @@
 #!/bin/bash
 # Simple script to list version numbers of critical development tools
-source script-helper.sh
+source "${S_LIB_PATH}"/script-helper.sh
 
 
 column_print() (

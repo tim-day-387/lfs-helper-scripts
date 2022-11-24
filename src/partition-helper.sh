@@ -1,6 +1,6 @@
 #!/bin/bash
 # Wrapper to fdisk
-source script-helper.sh
+source "${S_LIB_PATH}"/script-helper.sh
 
 
 get_disk

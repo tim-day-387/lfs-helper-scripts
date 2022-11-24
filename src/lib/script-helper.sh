@@ -3,7 +3,7 @@
 
 
 title() (
-    ./print-title.py "$1"
+    "${S_LIB_PATH}"/print-title.py "$1"
 )
 
 

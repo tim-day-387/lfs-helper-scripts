@@ -1,6 +1,6 @@
 #!/bin/bash
 # Set mount point and mount variable
-source script-helper.sh
+source "${S_LIB_PATH}"/script-helper.sh
 
 
 source_me

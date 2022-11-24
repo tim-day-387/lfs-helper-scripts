@@ -1,6 +1,6 @@
 #!/bin/bash
 # Check mount point and mount variable
-source script-helper.sh
+source "${S_LIB_PATH}"/script-helper.sh
 
 
 check_lfs_var
