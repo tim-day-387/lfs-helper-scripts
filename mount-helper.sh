@@ -7,12 +7,7 @@ source_me
 check_lfs_var
 
 
-title "DISK LAYOUT"
-lsblk
-echo
-title "SELECT DISK"
-read -r disk
-echo
+get_disk
 
 
 title "MOUNT"

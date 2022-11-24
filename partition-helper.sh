@@ -3,12 +3,7 @@
 source script-helper.sh
 
 
-title "DISK LAYOUT"
-lsblk
-echo
-title "SELECT DISK"
-read -r disk
-echo
+get_disk
 
 
 title "PARTITION MAKER"

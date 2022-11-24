@@ -58,6 +58,16 @@ source_me() {
 }
 
 
+get_disk() {
+    title "DISK LAYOUT"
+    lsblk
+    echo
+    title "SELECT DISK"
+    read -r disk
+    echo
+}
+
+
 if [ "$(check_if_sourced)" == "source" ]; then
     alias check_cmd_for_failure='
 has_failed=$?
