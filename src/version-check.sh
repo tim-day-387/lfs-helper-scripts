@@ -13,16 +13,27 @@ run_check() (
 )
 
 
+# Check system type
+which sw_vers > /dev/null
+is_macos=$?
+
+test -f /proc/version
+is_gnulinux=$?
+
+
 # General info
 title "GENERAL"
-cat /proc/version
+if [ "${is_macos}" -eq 0 ]; then
+    sw_vers
+else
+    cat /proc/version
+fi
 echo
 
 
 # Symlink info
 title "SYMLINKS"
-
-MYSH=$(readlink -f /bin/sh)
+MYSH=$(sh -c "echo $SHELL")
 echo "/bin/sh -> ${MYSH}"
 echo "${MYSH}" | grep -q bash || echo "ERROR: /bin/sh does not point to bash"
 unset MYSH
@@ -49,7 +60,7 @@ echo
 # Compiler functionality info
 title "COMPILER CHECK"
 
-echo 'int main(){}' > dummy.c && g++ -o dummy dummy.c
+echo 'int main(){}' > dummy.c && g++ -x c++ -o dummy dummy.c
 
 if [ -x dummy ]
   then echo "g++ compilation OK";
