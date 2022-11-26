@@ -11,5 +11,16 @@ check_cmd_for_failure
 
 title "CREATE DIRS"
 echo "${LFS}"/sources
-sudo mkdir -v "${LFS}"/sources
+sudo mkdir -pv "${LFS}"/sources
 sudo chmod -v a+wt "${LFS}"/sources
+
+
+echo "${LFS}"/{bin,etc,lib,sbin,usr,var,tool}
+sudo mkdir -pv "${LFS}"/{bin,etc,lib,sbin,usr,var,tool}
+
+
+case $(uname -m) in
+    x86_64)
+	echo "${LFS}"/lib64
+	sudo mkdir -pv "${LFS}"/lib64 ;;
+esac
