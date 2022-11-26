@@ -7,6 +7,24 @@ title() (
 )
 
 
+check_lfs_user() (
+    id lfs
+)
+
+
+check_lfs_user_dne() {
+    id lfs
+    has_failed=$?
+    if [ "${has_failed}" -ne 0 ]; then
+	echo "lfs can be created."
+        return 0
+    else
+	echo "lfs can not be created."
+	return 255
+    fi
+}
+
+
 check_lfs_var() {
     title "CHECK MOUNT POINT"
 
